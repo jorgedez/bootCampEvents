@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.489
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bootCamp.AzureFunctions", "bootCamp.AzureFunctions\bootCamp.AzureFunctions.csproj", "{C02B1557-25B2-4823-844E-4EDA88B9CC0C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bootCamp.AzureFunctions", "bootCamp.AzureFunctions\bootCamp.AzureFunctions.csproj", "{C02B1557-25B2-4823-844E-4EDA88B9CC0C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bootCamp.Shared", "bootCamp.Shared\bootCamp.Shared.csproj", "{60C2E9A3-49EF-405D-B21F-B257DE82944D}"
 EndProject
