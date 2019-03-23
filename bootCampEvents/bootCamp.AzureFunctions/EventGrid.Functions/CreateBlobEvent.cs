@@ -16,7 +16,7 @@ namespace bootCamp.AzureFunctions
         [FunctionName("CreateBlobEvent")]
         public static void Run([EventGridTrigger]JObject eventGridEvent, TraceWriter log)
         {
-            //var (action, fileName, isBuilding) = EventGridHelper.GetEventInfo(eventGridEvent);
+            var (action, fileName, isBuilding) = EventGridHelper.GetEventInfo(eventGridEvent);
 
             log.Info(eventGridEvent.ToString(Formatting.Indented));
             
