@@ -1,4 +1,4 @@
-# bootCampEvents
+# Integration BootCamp Tenerife - Azure Event Grid disparando Service Bus
 
 Basados en el fichero de Sources (response.json) deserializaremos el mismo (ejemplo de petición de hoteles, 500 registros).
 
