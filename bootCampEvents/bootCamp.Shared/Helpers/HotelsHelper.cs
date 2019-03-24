@@ -3,12 +3,10 @@ using bootCamp.Shared.Entities;
 using Microsoft.ApplicationInsights;
 using Microsoft.Azure.WebJobs.Host;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,17 +16,15 @@ namespace bootCamp.Shared.Helpers
     {
         public async Task ProccessByFileAsync(string fileName, string functionName, TraceWriter log, TelemetryClient _telemetry)
         {
-            log.Info($"{functionName} Recuperando el fichero");
+            LoggerHelper.WriteTrace(functionName, $"Recuperando el fichero {fileName} | a las {DateTime.UtcNow.ToString("dd/MM/yyyy HH-mm-ss")}", log, TraceLevel.Info, _telemetry);
+
             HotelsJson hotelList = new HotelsJson();
             List<Hotel> hoteles = new List<Hotel>();
 
             var serializer = new JsonSerializer();
-
             hotelList = JsonConvert.DeserializeObject<HotelsJson>(await BlobHelper.GetAsText(fileName, "demo"));
-
             hoteles = hotelList.Hotel.ToList();
 
-            log.Info($"{functionName} Recuperando {hoteles.Count()} hoteles en la oferta");
             LoggerHelper.WriteTrace(functionName, $"Recuperando {hoteles.Count()} hoteles en la oferta | {DateTime.UtcNow.ToString("dd/MM/yyyy HH-mm-ss")}", log, TraceLevel.Info, _telemetry);
 
             List<Hotel> hotelesLowCost = new List<Hotel>();
@@ -41,7 +37,8 @@ namespace bootCamp.Shared.Helpers
 
             AzureServiceBusHelper.CreateQueue(ConfigurationManager.AppSettings["AzureWebJobsServiceBus"], QueueNames.LowCost);
 
-            foreach (var hotel in hotelesLowCost) {
+            foreach (var hotel in hotelesLowCost)
+            {
                 AzureServiceBusHelper.SendMessage(ConfigurationManager.AppSettings["AzureWebJobsServiceBus"], QueueNames.LowCost, JsonConvert.SerializeObject(hotel));
                 LoggerHelper.WriteTrace(functionName, $"Detectado hotel {QueueNames.LowCost} | {DateTime.UtcNow.ToString("dd/MM/yyyy HH-mm-ss")}", log, TraceLevel.Info, _telemetry);
             }

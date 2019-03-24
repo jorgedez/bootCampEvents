@@ -8,6 +8,8 @@ using Microsoft.Azure.WebJobs.Extensions.EventGrid;
 using Microsoft.Azure.WebJobs.Host;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace bootCamp.AzureFunctions
@@ -22,7 +24,7 @@ namespace bootCamp.AzureFunctions
         {
             var (action, fileName) = EventGridHelper.GetEventInfo(eventGridEvent);
 
-            log.Info($"Procesando el blob {fileName}");
+            LoggerHelper.WriteTrace(functionName, $"Procesando el blob {fileName} | a las {DateTime.UtcNow.ToString("dd/MM/yyyy HH-mm-ss")}", log, TraceLevel.Info, _telemetry);
 
             if (action.Equals("Microsoft.Storage.BlobCreated"))
             {
@@ -30,12 +32,10 @@ namespace bootCamp.AzureFunctions
             }
             else
             {
-                log.Info($"Evento {action} | a verlas pasar");
+                LoggerHelper.WriteTrace(functionName, $"Evento {action} | a verlas pasar {DateTime.UtcNow.ToString("dd/MM/yyyy HH-mm-ss")}", log, TraceLevel.Info, _telemetry);
             }
 
-
-                log.Info(eventGridEvent.ToString(Formatting.Indented));
-            
+            log.Info(eventGridEvent.ToString(Formatting.Indented));
         }
     }
 }
