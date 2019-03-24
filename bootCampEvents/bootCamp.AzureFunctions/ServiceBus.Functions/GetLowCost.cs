@@ -22,7 +22,7 @@ namespace bootCamp.AzureFunctions.ServiceBus.Functions
             try
             {
                 var hotel = JsonConvert.DeserializeObject<Hotel>(sbMessage);
-                LoggerHelper.WriteTrace(functionName, $"{QueueNames.LowCost.ToUpper()} --> {hotel.name} con precio {hotel.minPrice} |a las {DateTime.UtcNow.ToString("dd/MM/yyyy HH-mm-ss")}", log, TraceLevel.Info, _telemetry);
+                LoggerHelper.WriteTrace(functionName, $"{QueueNames.LowCost.ToUpper()} --> {hotel.name} con precio {hotel.minPrice}€ |a las {DateTime.UtcNow.ToString("dd/MM/yyyy HH-mm-ss")}", log, TraceLevel.Info, _telemetry);
 
             }
             catch (Exception e)
