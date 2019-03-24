@@ -1,4 +1,6 @@
-# Global Integration Bootcamp Tenerife - Azure Event Grid disparando Service Bus
+# Global Integration Bootcamp - Tenerife
+
+# Catalogación de hoteles mediante Azure Event Grid/Service Bus
 
 Basados en el fichero de Sources (response.json) deserializaremos el mismo (ejemplo de petición de hoteles, 500 registros).
 
