@@ -8,6 +8,8 @@ La entrada de la aplicación irá unida a un Azure Event Grid (Blob) que será d
   - Microsoft.Storage.BlobDelete (Borrado)
   - Microsoft.Storage.BlobCreated (Creado)
   
+  https://docs.microsoft.com/es-es/azure/event-grid/
+  
   En el primer caso lo descartaremos aunque dejaremos constancia en el Log de ApplicationInsight y en el segundo caso, una vez tenida la acción y la ruta hacia el archivo, lo procesaremos, deserializaremos y filtraremos de la siguiente manera:
   
   - Hoteles LowCost (Precio minimo hab <= 200€)
