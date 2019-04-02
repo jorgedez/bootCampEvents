@@ -28,7 +28,7 @@ namespace bootCamp.AzureFunctions.ServiceBus.Functions
             catch (Exception e)
             {
                 LoggerHelper.TraceException(functionName, log, _telemetry, e);
-                throw e;
+                throw;
             }
         }
     }

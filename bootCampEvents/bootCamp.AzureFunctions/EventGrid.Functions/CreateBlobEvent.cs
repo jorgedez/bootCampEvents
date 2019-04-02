@@ -24,18 +24,27 @@ namespace bootCamp.AzureFunctions
         {
             var (action, fileName) = EventGridHelper.GetEventInfo(eventGridEvent);
 
-            LoggerHelper.WriteTrace(functionName, $"Procesando el blob {fileName} | a las {DateTime.UtcNow.ToString("dd/MM/yyyy HH-mm-ss")}", log, TraceLevel.Info, _telemetry);
+            try
+            {
 
-            if (action.Equals("Microsoft.Storage.BlobCreated"))
-            {
-                await new HotelsHelper().ProccessByFileAsync(fileName, functionName, log, _telemetry);
+                LoggerHelper.WriteTrace(functionName, $"Procesando el blob {fileName} | a las {DateTime.UtcNow.ToString("dd/MM/yyyy HH-mm-ss")}", log, TraceLevel.Info, _telemetry);
+
+                if (action.Equals("Microsoft.Storage.BlobCreated"))
+                {
+                    await new HotelsHelper().ProccessByFileAsync(fileName, functionName, log, _telemetry);
+                }
+                else
+                {
+                    LoggerHelper.WriteTrace(functionName, $"Evento {action} | a verlas pasar {DateTime.UtcNow.ToString("dd/MM/yyyy HH-mm-ss")}", log, TraceLevel.Info, _telemetry);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                LoggerHelper.WriteTrace(functionName, $"Evento {action} | a verlas pasar {DateTime.UtcNow.ToString("dd/MM/yyyy HH-mm-ss")}", log, TraceLevel.Info, _telemetry);
+                LoggerHelper.WriteTrace(functionName, $"Se ha producido un error en {fileName} | {action} a las {DateTime.UtcNow.ToString("dd/MM/yyyy HH-mm-ss")}. Error: {ex} , {ex.InnerException} ", log, TraceLevel.Error, _telemetry);
+                throw;
             }
 
             log.Info(eventGridEvent.ToString(Formatting.Indented));
+            }
         }
     }
-}
